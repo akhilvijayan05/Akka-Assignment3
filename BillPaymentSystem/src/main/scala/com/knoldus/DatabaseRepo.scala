@@ -12,14 +12,17 @@ class DatabaseRepo extends Actor{
   override def receive = {
 
     case user:String=>{
+     // Thread.sleep(2000)
 //println(user)
       DBInMemory.storing(user)
-      DBInMemory.database foreach {case (key, value) => println (key + "-->" + value)}
-      salaryDepositActor ! user
+     // println(DBInMemory.database)
+      //DBInMemory.database foreach {case (key, value) => println (key + "-->" + value)}
+      salaryDepositActor ! DBInMemory.database(user)
     }
     case (user:UserDetails,bill:BillerDetails)=>{
 
       DBInMemory.paying(user,bill)
+//      sender() ! "Done"
     }
   }
 }

@@ -27,7 +27,7 @@ object Main extends App{
     val f=router ? (UserDetails("Akhil", "Delhi", "akhil"), i)
     Await.result(f,timeout.duration)
   }
-  //println(UserAccountService.userDetails.toList)
+//  println(UserAccountService.userDetails.toList)
 for(i <- 100 to 110) {
 //println("akhil"+i+1)
   router1 ! (i.toLong, "akhil" + i + 1, (10000 + i).toLong)

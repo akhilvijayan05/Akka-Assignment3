@@ -6,18 +6,16 @@ package com.knoldus
 class DBInMemory {
 
   val database= collection.mutable.Map[String, UserDetails]()
-  val userService=new UserAccountService
 
   def storing(user:String)={
 
-    def iterate(salaryList:List[UserDetails]):Boolean= {
+    def iterate(salaryList:List[UserDetails]):UserDetails= {
 
       salaryList match {
 
         case head :: tail  => {
           if (head.username equals user) {
-            database += (head.username -> head)
-            true
+            head
           }
           else
             iterate(tail)
@@ -25,16 +23,23 @@ class DBInMemory {
 
         case head :: Nil => {
           if (head.username equals user) {
-            database += (head.username -> head)
-            true
+            head
           }
           else
-            false
+           null
+        }
+        case Nil=>{
+          println("No data found")
+          null
         }
       }
     }
    // println(user+" >>>>>>>>> "+SalaryDepositService.userAccount.toList)
-    iterate(SalaryDepositService.userAccount.toList)
+    val check=iterate(SalaryDepositService.userAccount.toList)
+   // println(check)
+    if(check!=null)
+      database += (check.username -> check)
+
 
     //println(check.username)
   }
@@ -42,8 +47,14 @@ class DBInMemory {
 
 //    database foreach {case (key, value) => println (key + "-->" + value)}
 //    println()
-    database(user.username)=UserDetails(user.holderName,user.address,user.username,user.amount-bill.amount,user.accNumber)
-//    database foreach {case (key, value) => println (key + "-->" + value)}
+    if(bill.amount<user.amount) {
+
+      database(user.username) = UserDetails(user.holderName, user.address, user.username, user.amount - bill.amount, user.accNumber)
+      println(user.username+">>>>>>>>"+database)
+    }
+      else
+      println("Insufficient balance !!")
+    //    database foreach {case (key, value) => println (key + "-->" + value)}
   }
 }
 object DBInMemory extends DBInMemory

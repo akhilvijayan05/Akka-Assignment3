@@ -12,7 +12,7 @@ class SalaryDepositService {
 
   def depositing(accNumber:Long,username:String,salary:Long)={
 
-    def iterate(userList:List[UserDetails]):UserDetails= {
+    def iterate(userList:List[UserDetails]):Boolean= {
 
       userList match {
 
@@ -20,7 +20,8 @@ class SalaryDepositService {
           if (head.accNumber equals accNumber) {
             val user = head.copy(amount = salary)
             userAccount.append(user)
-            user
+            true
+           // user
           }
           else
             iterate(tail)
@@ -30,19 +31,22 @@ class SalaryDepositService {
           if (head.accNumber equals accNumber) {
             val user = head.copy(amount = salary)
             userAccount.append(user)
-            user
+            true
+          //  user
           }
           else
-            null
+            false
+           // null
         }
       }
     }
 
     val check=iterate(UserAccountService.userDetails.toList)
-
+check
     //println(check.username)
-    if(check!=null)
-      check.username
+//    if(check!=null)
+//      check.username
+
   }
 }
 object SalaryDepositService extends SalaryDepositService

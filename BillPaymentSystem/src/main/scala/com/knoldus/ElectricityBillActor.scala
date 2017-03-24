@@ -11,6 +11,6 @@ class ElectricityBillActor extends Actor{
   override def receive = {
 
     case user:UserDetails=> database ! (user,BillerDetails(electricity,"Yamuna Power",user.accNumber,"23/3/2017",1000,3,0,0))
-
+      //context.actorOf(Props[DatabaseRepo]).forward(user,BillerDetails(electricity,"Yamuna Power",user.accNumber,"23/3/2017",1000,3,0,0))
   }
 }
