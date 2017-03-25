@@ -5,6 +5,7 @@ import akka.util.Timeout
 import scala.concurrent.duration._
 import akka.pattern.ask
 import scala.concurrent.Await
+//import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by knoldus on 23/3/17.
@@ -13,7 +14,7 @@ object Main extends App{
 
   val system = ActorSystem("Book")
   val props = Props[UserAccountGenerator]
-  val router = system.actorOf(props)
+  val router = system.actorOf(props,"boundedmailboxactor")
   val props1 = Props[SalaryDepositActor]
   val router1 = system.actorOf(props1)
 
@@ -27,9 +28,10 @@ object Main extends App{
     val f=router ? (UserDetails("Akhil", "Delhi", "akhil"), i)
     Await.result(f,timeout.duration)
   }
-//  println(UserAccountService.userDetails.toList)
+
 for(i <- 100 to 110) {
 //println("akhil"+i+1)
   router1 ! (i.toLong, "akhil" + i + 1, (10000 + i).toLong)
 }
+  
 }

@@ -3,7 +3,7 @@ package com.knoldus
 /**
   * Created by knoldus on 23/3/17.
   */
-class DBInMemory {
+object DBInMemory {
 
   val database= collection.mutable.Map[String, UserDetails]()
 
@@ -49,12 +49,16 @@ class DBInMemory {
 //    println()
     if(bill.amount<user.amount) {
 
-      database(user.username) = UserDetails(user.holderName, user.address, user.username, user.amount - bill.amount, user.accNumber)
-      println(user.username+">>>>>>>>"+database)
+      val newUserAccount=user.copy(amount = user.amount-bill.amount )
+      database -=user.username
+      database +=(newUserAccount.username->newUserAccount)
+
+//      database(user.username) = UserDetails(user.holderName, user.address, user.username, user.amount - bill.amount, user.accNumber)
+      //println(user.username+">>>>>>>>"+database.get(user.username))
     }
       else
       println("Insufficient balance !!")
     //    database foreach {case (key, value) => println (key + "-->" + value)}
   }
-}
-object DBInMemory extends DBInMemory
+}//Thread.sleep(1000)
+//object DBInMemory extends DBInMemory

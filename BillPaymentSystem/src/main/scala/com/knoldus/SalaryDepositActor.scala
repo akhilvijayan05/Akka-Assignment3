@@ -37,17 +37,19 @@ class SalaryDepositActor extends Actor{
     }
     case user:UserDetails=>{
 
-//      implicit val timeout = Timeout(1000 seconds)
+//      implicit val timeout = Timeout(100 seconds)
 //      val f=phone ? user
 //      Await.result(f,timeout.duration)
 //      //implicit val timeout1 = Timeout(1000 seconds)
-//      val f1=electricity ? user
-//      Await.result(f1,timeout.duration)
+//      val f1=electricity ! user
+//      //Await.result(f1,timeout.duration)
 //      //implicit val timeout2 = Timeout(1000 seconds)
 //      val f2=electricity ? user
 //      Await.result(f2,timeout.duration)
       phone ! user
+//      Thread.sleep(2000)
       electricity ! user
+//      Thread.sleep(2000)
       internet ! user
 
     }
